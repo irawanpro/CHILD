@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -477,7 +478,7 @@
     <div class="game-container">
         <div class="volume-control">
             <label for="volumeSlider">Musik:</label>
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.05">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
         </div>
 
         <div id="gameScreen">
@@ -770,7 +771,7 @@
 
             factsContentEl.querySelectorAll('.fact-speaker-button').forEach(button => {
                 button.addEventListener('click', (event) => {
-                    const soundSrc = event.target.dataset.sound-src;
+                    const soundSrc = event.target.dataset.soundSrc;
                     playSentenceSound(soundSrc);
                 });
             });
@@ -840,15 +841,16 @@
         // Event listeners
         questionMarkDisplayEl.addEventListener('click', playLetterSoundWithEffect);
         volumeSliderEl.addEventListener('input', (event) => {
-            // Perubahan yang diminta: volume musik latar tetap kecil
-            backgroundMusicEl.volume = event.target.value * 0.05; 
+            const sliderValue = event.target.value;
+            // Musik latar diatur ke volume sangat kecil
+            backgroundMusicEl.volume = sliderValue * 0.05;
             
-            // Volume suara game lainnya diatur sesuai slider
-            gameSoundEl.volume = event.target.value;
-            feedbackSoundEl.volume = event.target.value;
-            clickEffectSoundEl.volume = event.target.value;
-            correctLetterSoundEl.volume = event.target.value;
-            factSoundPlayerEl.volume = event.target.value;
+            // Suara game lainnya mengikuti nilai slider
+            gameSoundEl.volume = sliderValue;
+            feedbackSoundEl.volume = sliderValue;
+            clickEffectSoundEl.volume = sliderValue;
+            correctLetterSoundEl.volume = sliderValue;
+            factSoundPlayerEl.volume = sliderValue;
         });
         playInstructionSoundBtn.addEventListener('click', playInstructionSound);
         showFactsButton.addEventListener('click', showFacts);
@@ -864,12 +866,11 @@
         function tryPlayBackgroundMusic() {
             backgroundMusicEl.src = gameSounds.backgroundMusic;
             
-            // Perubahan yang diminta: volume musik latar diatur sangat kecil saat inisialisasi
+            // Mengatur volume musik latar ke nilai awal yang kecil
             backgroundMusicEl.volume = 0.05; 
             
-            volumeSliderEl.value = 0.05;
-            
-            // Mengatur volume untuk suara game lainnya
+            // Mengatur nilai awal slider dan volume audio lainnya
+            volumeSliderEl.value = 0.5; // Mengatur slider ke tengah-tengah
             gameSoundEl.volume = volumeSliderEl.value;
             feedbackSoundEl.volume = volumeSliderEl.value;
             clickEffectSoundEl.volume = volumeSliderEl.value;
@@ -910,7 +911,7 @@
                 { name: "c", sound: "assets/audio/c.mp3", correctSound: "assets/audio/yabenar_c.mp3", sentence: "AYAH BELI DURIAN", sentenceSound: "assets/audio/ayah_beli_durian.mp3" },
                 { name: "d", sound: "assets/audio/d.mp3", correctSound: "assets/audio/yabenar_d.mp3", sentence: "MATA SAYA SAKIT", sentenceSound: "assets/audio/mata_saya_sakit.mp3" },
                 { name: "e", sound: "assets/audio/e.mp3", correctSound: "assets/audio/yabenar_e.mp3", sentence: "KITA BISA LARI", sentenceSound: "assets/audio/kita_bisa_lari.mp3" },
-                { name: "f", sound: "assets/audio/f.mp3", correctSound: "assets/audio/yabenar_f.mpence: "RUMAH SAYA KECIL", sentenceSound: "assets/audio/rumah_saya_kecil.mp3" },
+                { name: "f", sound: "assets/audio/f.mp3", correctSound: "assets/audio/yabenar_f.mp3", sentence: "RUMAH SAYA KECIL", sentenceSound: "assets/audio/rumah_saya_kecil.mp3" },
                 { name: "g", sound: "assets/audio/g.mp3", correctSound: "assets/audio/yabenar_g.mp3", sentence: "KAKA RAJIN SEKALI", sentenceSound: "assets/audio/kaka_rajin_sekali.mp3" },
                 { name: "h", sound: "assets/audio/h.mp3", correctSound: "assets/audio/yabenar_h.mp3", sentence: "AYAM ITU LUCU", sentenceSound: "assets/audio/ayam_itu_lucu.mp3" },
                 { name: "i", sound: "assets/audio/i.mp3", correctSound: "assets/audio/yabenar_i.mp3", sentence: "MAKAN NASI BARENG", sentenceSound: "assets/audio/makan_nasi_bareng.mp3" },
